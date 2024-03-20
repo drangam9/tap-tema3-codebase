@@ -2,9 +2,15 @@
 {
     public class DelegateService : IDelegateService
     {
-        public int Test1(int value)
+        public string Introduction(string value, Func<string, string, string> callback)
         {
-            return value * 10;
+            var upperName = value.ToUpper();
+            return callback(upperName, "Test");
+        }
+
+        public string Hello(string firstname, string lastname)
+        {
+            return $"Hello, {firstname} {lastname}";
         }
     }
 }

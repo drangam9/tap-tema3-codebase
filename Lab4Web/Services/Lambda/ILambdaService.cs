@@ -2,6 +2,10 @@
 {
     public interface ILambdaService
     {
-        int Test1(int value);
+        Tuple<int, int, int> Test1(int value);
+
+        bool Test2(string value);
+
+        Task<string> Test3Async(string value);
     }
 }

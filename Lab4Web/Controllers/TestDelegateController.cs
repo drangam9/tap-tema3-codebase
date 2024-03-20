@@ -15,9 +15,22 @@ namespace Lab4Web.Controllers
         }
 
         [HttpGet("test-1")]
-        public int Get()
+        public string Test1(string name)
         {
-            return _delegateService.Test1(1);
+            var callback = _delegateService.Hello;
+
+            return _delegateService.Introduction(name, callback);
+        }
+
+        [HttpGet("test-2")]
+        public string Test2(string name, bool welcome)
+        {
+            var callback1 = _delegateService.Hello;
+            var callback2 = (string firstname, string lastname) => $"Bye, {firstname} {lastname}";
+
+            var callback = welcome ? callback1 : callback2;
+
+            return _delegateService.Introduction(name, callback);
         }
     }
 }

@@ -2,6 +2,8 @@
 {
     public interface IDelegateService
     {
-        int Test1(int value);
+        string Introduction(string value, Func<string, string, string> callback);
+
+        string Hello(string firstname, string lastname);
     }
 }

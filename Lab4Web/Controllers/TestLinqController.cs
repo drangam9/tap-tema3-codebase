@@ -15,9 +15,9 @@ namespace Lab4Web.Controllers
         }
 
         [HttpGet("test-1")]
-        public int Get()
+        public int Get(int age)
         {
-            return _linqService.Test1(1);
+            return _linqService.Test1(age);
         }
     }
 }

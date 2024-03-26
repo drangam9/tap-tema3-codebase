@@ -2,32 +2,43 @@
 {
     public class LambdaService : ILambdaService
     {
-        public Tuple<int, int,int> Test1(int value)
-        {
-            var lambdaExp = (int num) => new Tuple<int, int, int>(num % 10, (num /= 10) % 10, (num /= 10) % 10);
-            return lambdaExp(value);
-        }
 
-        public bool Test2(string value)
+        public string NoParameter()
         {
-            return int.TryParse(value, out _);
+            var lambdaNoParameter = new Func<string>(() => $"Welcome! Today's date is {DateTime.Today}");
+            return lambdaNoParameter();
         }
-
-        public async Task<string> Test3Async(string value)
+        public string OneParameter(string value)
         {
-            var lambaExp = async (string v) =>
+            var lambdaOneParameter = new Func<string, string>((v) => v[0].ToString().ToUpper() + v.Substring(1).ToLower());
+            return lambdaOneParameter(value);
+        }
+        public string TwoParameters(string value, int age)
+        {
+            var lambdaTwoParameters = new Func<string, int, string>((v, a) => $"{v} is {a} years old");
+            return lambdaTwoParameters(value, age);
+        }
+        public int UnusedParameters(int value1, int value2)
+        {
+            Func<int, int, int> lambdaUnusedParams = (_, _) => { return 42; };
+            return lambdaUnusedParams(value1, value2);
+        }
+        public string DefaultParameters(string value = "John")
+        {
+            Func<string, string> lambdaDefaultParams = (v) =>
             {
-                await Delay();
-                return value.ToLower();
+                if (value == "John")
+                {
+                    return "Default name: John";
+                }
+                return "Name: " + v;
             };
-
-            return await lambaExp(value);
+            return lambdaDefaultParams(value);
         }
-
-
-        public Task Delay()
+        public int TupleParameter(Tuple<int, int, int> value)
         {
-            return Task.Delay(10000);
+            var lambdaExpression = new Func<Tuple<int, int, int>, int>((v) => v.Item1 * 100 + v.Item2 * 10 + v.Item3);
+            return lambdaExpression(value);
         }
     }
 }

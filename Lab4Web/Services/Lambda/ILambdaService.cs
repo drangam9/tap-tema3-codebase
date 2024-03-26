@@ -2,10 +2,12 @@
 {
     public interface ILambdaService
     {
-        Tuple<int, int, int> Test1(int value);
 
-        bool Test2(string value);
-
-        Task<string> Test3Async(string value);
+        string NoParameter();
+        string OneParameter(string value);
+        string TwoParameters(string value, int age);
+        int UnusedParameters(int value1, int value2);
+        string DefaultParameters(string value = "John");
+        int TupleParameter(Tuple<int, int, int> value);
     }
 }

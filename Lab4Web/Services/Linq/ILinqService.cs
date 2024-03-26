@@ -2,6 +2,9 @@
 {
     public interface ILinqService
     {
-        int Test1(int value);
+        List<Student> GetByGrade(int grade);
+        List<string> GetCountries();
+
+        int GetTotalStudents();
     }
 }

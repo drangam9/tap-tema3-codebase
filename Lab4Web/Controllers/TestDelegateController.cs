@@ -3,8 +3,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Lab4Web.Controllers
 {
+
     [ApiController]
     [Route("[controller]")]
+
     public class TestDelegateController : ControllerBase
     {
         private readonly IDelegateService _delegateService;
@@ -14,23 +16,25 @@ namespace Lab4Web.Controllers
             _delegateService = delegateService;
         }
 
-        [HttpGet("test-1")]
-        public string Test1(string name)
+        [HttpGet("exercise-1")]
+        public string Exercise1(string firstName, string lastName)
         {
+
+            return _delegateService.Introduction(firstName, lastName, (firstName, lastName) => $"First Name: {firstName}\n Last Name: {lastName} \nYour full name has a total of {firstName.Length + lastName.Length} letters  ");
+        }
+        [HttpGet("exercise-2")]
+        public string Exercise2(string firstName, string lastName, bool bye)
+        {
+
             var callback = _delegateService.Hello;
+            if (bye)
+            {
+                callback = _delegateService.Goodbye;
+            }
 
-            return _delegateService.Introduction(name, callback);
+
+            return _delegateService.Introduction(firstName, lastName, callback);
         }
 
-        [HttpGet("test-2")]
-        public string Test2(string name, bool welcome)
-        {
-            var callback1 = _delegateService.Hello;
-            var callback2 = (string firstname, string lastname) => $"Bye, {firstname} {lastname}";
-
-            var callback = welcome ? callback1 : callback2;
-
-            return _delegateService.Introduction(name, callback);
-        }
     }
 }

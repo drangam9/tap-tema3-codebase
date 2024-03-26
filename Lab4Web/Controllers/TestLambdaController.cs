@@ -14,24 +14,33 @@ namespace Lab4Web.Controllers
             _lambdaService = lambdaService;
         }
 
-        [HttpGet("test-1")]
-        public string Get(int value)
+        [HttpGet("exercise-1")]
+        public string Get(string name, int age)
         {
-            var tupleValue = _lambdaService.Test1(value);
-            return $"{tupleValue.Item1} / {tupleValue.Item2} / {tupleValue.Item3}";
-        }
-
-        [HttpGet("test-2")]
-        public string Test2(string value)
-        {
-            return _lambdaService.Test2(value) ? "Number" : "Not number";
-        }
-
-        [HttpGet("test-3")]
-        public string Test3(string value)
-        {
-            var result = _lambdaService.Test3Async(value).Result;
+            var result = "i) " + _lambdaService.NoParameter();
+            result += "\n ii) Your first name is " + _lambdaService.OneParameter(name);
+            result += "\n iii) " + _lambdaService.TwoParameters(name, age);
+            result += "\n iv) What's the answer to life, the universe, and everything? " + _lambdaService.UnusedParameters(1, 2);
+            result += "\n v) " + _lambdaService.DefaultParameters(name) +
+                      "\n " + _lambdaService.DefaultParameters();
             return result;
+        }
+        [HttpGet("exercise-1-tuple-parameter")]
+        public int Get(int digit1, int digit2, int digit3)
+        {
+            var value = new Tuple<int, int, int>(digit1, digit2, digit3);
+            return _lambdaService.TupleParameter(value);
+        }
+        [HttpGet("exercise-2")]
+        public string Get(int SecondsToWait)
+        {
+            async Task<string> asyncLambda()
+            {
+                await Task.Delay(SecondsToWait * 1000);
+                return $"Async action completed successfully in {SecondsToWait} seconds. ";
+            }
+
+            return asyncLambda().Result;
         }
     }
 }

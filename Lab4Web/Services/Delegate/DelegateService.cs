@@ -2,15 +2,18 @@
 {
     public class DelegateService : IDelegateService
     {
-        public string Introduction(string value, Func<string, string, string> callback)
+        public string Introduction(string firstName, string lastName, Func<string, string, string> callback)
         {
-            var upperName = value.ToUpper();
-            return callback(upperName, "Test");
+            return callback(firstName.ToUpper(), lastName.ToUpper());
+        }
+        public string Hello(string firstName, string lastName)
+        {
+            return $"Hello, {firstName} {lastName}";
+        }
+        public string Goodbye(string firstName, string lastName)
+        {
+            return $"Goodbye, {firstName} {lastName}";
         }
 
-        public string Hello(string firstname, string lastname)
-        {
-            return $"Hello, {firstname} {lastname}";
-        }
     }
 }
